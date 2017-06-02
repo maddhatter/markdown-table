@@ -2,7 +2,7 @@
 
 use Illuminate\Contracts\Support\Renderable;
 
-class MarkdownTable implements Renderable
+class Builder implements Renderable
 {
 
     protected $headers = [];
