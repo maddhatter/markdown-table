@@ -121,7 +121,7 @@ class Builder implements Renderable
                 break;
         }
 
-        return str_pad($contents, $width, ' ', $type);
+        return $this->mb_str_pad($contents, $width, ' ', $type);
     }
 
     protected function calculateWidths()
@@ -130,7 +130,7 @@ class Builder implements Renderable
 
         foreach (array_merge([$this->headers], $this->rows) as $row) {
             for ($i = 0; $i < count($row); $i++) {
-                $iWidth = strlen((string)$row[$i]);
+                $iWidth = mb_strlen((string)$row[$i]);
                 if (( ! array_key_exists($i, $widths)) || $iWidth > $widths[$i]) {
                     $widths[$i] = $iWidth;
                 }
@@ -178,5 +178,12 @@ class Builder implements Renderable
         return 'L';
     }
 
-
+    protected function mb_str_pad($input, $pad_length, $pad_string, $pad_style, $encoding = "UTF-8") {
+        return str_pad(
+            $input,
+            strlen($input) - mb_strlen($input, $encoding) + $pad_length,
+            $pad_string,
+            $pad_style
+        );
+    }
 }
